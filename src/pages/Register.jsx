@@ -29,7 +29,6 @@ const Register = () => {
             setError({ ...error, password: "must be 6 OR more than 6 characters long" });
             return
         }
-        console.log({ name, email, photo, password });
 
         createNewUser(email, password)
             .then((result) => {
@@ -64,7 +63,7 @@ const Register = () => {
                         <label className="label">
                             <span className="label-text">Photo URL</span>
                         </label>
-                        <input type="text" name="photo" placeholder="photo URL" className="input input-bordered" required />
+                        <input type="text" name="photo" placeholder="photo URL" className="input input-bordered"  />
                     </div>
 
                     <div className="form-control">
