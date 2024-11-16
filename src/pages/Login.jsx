@@ -1,11 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 
 const Login = () => {
 
-    const { userLogin, setUser } = useContext(AuthContext);
+    const { userLogin, setUser, forgotPassword } = useContext(AuthContext);
     const [error, setError] = useState({})
+    const emailRef = useRef();
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -29,6 +30,20 @@ const Login = () => {
             })
     }
 
+
+    const handleForgotPassword = () => {
+        const email = emailRef.current.value;
+        if (!email) {
+            alert("Please enter a email address")
+        }
+        else {
+            forgotPassword(email)
+                .then(() => {
+                    alert("Reset email sent to", email, ", please check your email");
+                })
+        }
+    }
+
     return (
         <div className="min-h-screen flex justify-center items-center">
             <div className="card bg-base-100 w-full max-w-lg shrink-0 rounded-none p-10">
@@ -38,7 +53,12 @@ const Login = () => {
                         <label className="label">
                             <span className="label-text">Email</span>
                         </label>
-                        <input type="email" name="email" placeholder="email" className="input input-bordered" required />
+                        <input
+                            type="email"
+                            name="email"
+                            ref={emailRef}
+                            placeholder="email"
+                            className="input input-bordered" required />
                     </div>
                     <div className="form-control">
                         <label className="label">
@@ -53,7 +73,7 @@ const Login = () => {
                             </label>
                         }
 
-                        <label className="label">
+                        <label onClick={handleForgotPassword} className="label">
                             <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                         </label>
                     </div>
